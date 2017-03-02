@@ -10,9 +10,10 @@ $(GIT_HOOKS):
 
 CC ?= gcc
 CFLAGS = \
-	-std=gnu99 -Wall -O0 -g
+	-std=gnu99 -Wall -O0 -g -fopenmp
 LDFLAGS = \
-	-lm
+	-lm -fopenmp
+OMP_THREADS ?= 1
 
 ifeq ($(strip $(PROFILE)),1)
 PROF_FLAGS = -pg
@@ -26,7 +27,7 @@ OBJS := \
 	main.o
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $< -DOMP_THREADS=$(OMP_THREADS)
 
 
 $(EXEC): $(OBJS)
