@@ -474,7 +474,7 @@ void raytracing(uint8_t *pixels, color background_color,
     int factor = sqrt(SAMPLES);
 
     #pragma omp parallel for if(OMP_THREADS - 1) num_threads(OMP_THREADS) \
-    private(d, stk, object_color)
+    private(d, stk, object_color) schedule(dynamic, 1)
     for (int j = 0; j < height; j++) {
         for (int i = 0; i < width; i++) {
             double r = 0, g = 0, b = 0;
